@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Obtener JSON con AJAX</title>
+
+<style type="text/css">
+.contenedor-tabla{
+
+display: table;
+
+}
+
+.contenedor-fila{
+
+display: table-row;
+
+}
+
+.contenedor-columna1{
+
+display: table-cell;
+order: 2px dotted #C0C0C0;
+width: auto;
+
+}
+.contenedor-columna2{
+
+display: table-cell;
+order: 2px dotted #C0C0C0;
+width: auto;
+
+}
+.contenedor-columna3{
+
+display: table-cell;
+order: 2px dotted #C0C0C0;
+width: auto;
+
+}
+.tabla{
+display: table;
+border: medium #C0C0CF solid;
+width: 400px;
+}
+.columna1{
+display: table-cell;
+border: 2px dotted #C0C0C0;
+width: 120px;
+}
+.columna2{
+display: table-cell;
+border: 2px dotted #C0C0C0;
+width: 70%;
+}
+.columna3{
+display: table-cell;
+border: 2px dotted #C0C0C0;
+width: auto;
+}
+.fila{
+display: table-row;
+border: 2px dotted #C0C0C0;
+width: auto;
+}
+	.enviar{
+cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+<h1>Datos para enviar a PHP</h1>
+
+<input type="text" id="nombre" placeholder="Nombre" accept="text/plain"><br><br>
+<input type="text" id="apellido" placeholder="Apellido" accept="text/plain"><br><br>
+<input type="number" id="edad" placeholder="Edad" accept="text/plain">
+
+<div class="enviar"><h3>Enviar</h3></div>
+<hr>
+<div class="respuesta"></div>
+
+<script src="js/jquery-2.1.0.min.js"></script>
+<script>
+    $(".enviar").click(function(e) {
+	e.preventDefault();
+	var nombre = $("#nombre").val(),
+	apellido = $("#apellido").val(),
+	edad = $("#edad").val(),
+
+	//"nombre del parámetro POST":valor (el cual es el objeto guardado en las variables de arriba)
+	datos = {"nombre":nombre, "apellido":apellido,"edad":edad};
+
+	$.ajax({
+		url: "http://www.global.globalbitx.com/datos.php",
+		type: "POST",
+		data: datos
+	}).done(function(respuesta){
+		if (respuesta.estado === "ok") {
+			console.log(JSON.stringify(respuesta));
+
+			var nombre = respuesta.nombre,
+			apellido = respuesta.apellido,
+			edad = respuesta.edad;
+			
+			document.getElementById("nombre3").innerHTML=respuesta.nombre;
+			document.getElementById("apellido3").innerHTML=respuesta.apellido;
+			document.getElementById("edad3").innerHTML=respuesta.edad;
+			document.getElementById("nombre4").innerHTML=respuesta.nombre;
+			document.getElementById("apellido4").innerHTML=respuesta.apellido;
+			document.getElementById("edad4").innerHTML=respuesta.edad;
+			
+
+			$(".respuesta").html("Servidor:<br><pre>"+JSON.stringify(respuesta, null, 2)+"</pre>");
+			
+                
+            
+			
+		}
+	});
+});
+
+
+</script>
+
+<div class="tabla"> 
+<div>Fila 1 La cabecera con el logo de la página "header" </div> 
+<div> 
+<div class="fila"> 
+<div>Fila 1 La cabecera con el logo de la página "header" </div> 
+<div>
+<div class="columna1"><div id="nombre3"></div></div>
+<div class="columna2"><div id="apellido3"></div></div>
+<div class="columna3"><div id="edad3"></div></div>
+</div>
+<div class="fila"> 
+<div>Fila 1 La cabecera con el logo de la página "header" </div> 
+<div>
+<div class="columna1"><div id="nombre4"></div></div>
+<div class="columna2"><div id="apellido4"></div></div>
+<div class="columna3"><div id="edad4"></div></div>
+</div>
+</div>
+</div>
+</div>
+<div>El final de la página "footer" </div>
+</div> 
+<div>
+<div id="response-container"></div>
+</div>
+</body>
+</html>
